@@ -408,92 +408,307 @@ server.port=8080
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>高校选课管理系统</title>
     <style>
+        :root {
+            --primary: #1d4ed8;
+            --primary-dark: #1e40af;
+            --primary-light: #dbeafe;
+            --success: #0f766e;
+            --danger: #dc2626;
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --border: #d8e0ec;
+            --bg-page: #eef3f9;
+            --bg-card: #ffffff;
+            --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: "Microsoft YaHei", sans-serif;
-            background: #f5f7fb;
-            color: #1f2937;
+            background: var(--bg-page);
+            color: var(--text-main);
+        }
+
+        .topbar {
+            height: 64px;
+            background: linear-gradient(90deg, #123c7c, #1d4ed8);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.18);
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+        }
+
+        .topbar-subtitle {
+            font-size: 13px;
+            opacity: 0.86;
         }
 
         main {
-            max-width: 1080px;
-            margin: 32px auto;
-            padding: 0 20px;
+            max-width: 1180px;
+            margin: 28px auto 40px;
+            padding: 0 24px;
         }
 
-        h1 {
-            margin-bottom: 8px;
-            color: #12355b;
+        .hero {
+            background: linear-gradient(135deg, #ffffff, #f7fbff);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 28px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+            color: #0f2f63;
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 8px;
+            min-width: 260px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .content-stack {
+            margin-top: 18px;
         }
 
         .panel {
-            background: #ffffff;
-            border: 1px solid #d9e2ec;
-            border-radius: 8px;
-            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel + .panel {
             margin-top: 18px;
-            box-shadow: 0 4px 14px rgba(18, 53, 91, 0.08);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #0f2f63;
+        }
+
+        .panel-desc {
+            margin: 6px 0 0;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
         }
 
         textarea {
             width: 100%;
             min-height: 140px;
-            box-sizing: border-box;
-            border: 1px solid #bcccdc;
-            border-radius: 6px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
             padding: 12px;
             font-size: 14px;
             resize: vertical;
+            outline: none;
+            background: #fbfdff;
+            color: var(--text-main);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea:focus,
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
         }
 
         input {
-            min-width: 260px;
-            border: 1px solid #bcccdc;
-            border-radius: 6px;
-            padding: 10px;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 12px;
             font-size: 14px;
+            outline: none;
+            background: #fbfdff;
         }
 
         button {
-            margin-top: 10px;
-            margin-right: 8px;
             border: none;
-            border-radius: 6px;
-            background: #0f6cbf;
+            border-radius: 10px;
+            background: var(--primary);
             color: #ffffff;
-            padding: 10px 18px;
+            padding: 11px 16px;
             cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 6px 14px rgba(29, 78, 216, 0.18);
         }
 
         button:hover {
-            background: #0a5596;
+            background: var(--primary-dark);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--primary-dark);
+            border: 1px solid #b8c8e6;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f6ff;
+        }
+
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 10px;
+            align-items: center;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 12px;
             background: #ffffff;
+            overflow: hidden;
+            border-radius: 10px;
         }
 
         th, td {
-            border: 1px solid #d9e2ec;
-            padding: 10px;
+            border-bottom: 1px solid #e5ebf3;
+            padding: 12px 14px;
             text-align: left;
+            font-size: 14px;
         }
 
         th {
-            background: #e7f0fa;
+            background: #f1f5fb;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        tr:hover td {
+            background: #f8fbff;
+        }
+
+        td:first-child,
+        td:nth-child(2) {
+            font-family: Consolas, "Microsoft YaHei", sans-serif;
         }
 
         .message {
             margin-top: 12px;
-            color: #b42318;
+            color: var(--danger);
+            font-weight: 600;
         }
 
         .type-title {
-            margin-top: 20px;
-            color: #12355b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 22px 0 0;
+            color: #0f2f63;
+            font-size: 16px;
+        }
+
+        .count-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 24px;
+            border-radius: 999px;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 12px;
+            padding: 0 9px;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 14px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            background: #ffffff;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            box-shadow: none;
+            padding: 9px 14px;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 6px 14px rgba(29, 78, 216, 0.18);
         }
 
         .file-row {
@@ -506,65 +721,170 @@ server.port=8080
 
         .drop-zone {
             margin-top: 14px;
-            border: 2px dashed #9fb3c8;
-            border-radius: 8px;
-            background: #f8fbff;
-            padding: 24px;
+            border: 2px dashed #b7c7de;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8fbff, #f1f7ff);
+            padding: 28px 18px;
             text-align: center;
-            color: #52606d;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
         }
 
         .drop-zone.drag-over {
-            border-color: #0f6cbf;
-            background: #e7f0fa;
-            color: #12355b;
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .record-panel {
+            margin-top: 18px;
+        }
+
+        .empty-state {
+            padding: 34px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-muted);
+            background: #fbfdff;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .pagination button {
+            box-shadow: none;
+            padding: 8px 12px;
+        }
+
+        .pagination button:disabled {
+            background: #e2e8f0;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 860px) {
+            .topbar {
+                height: auto;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
+                padding: 16px 20px;
+            }
+
+            main {
+                padding: 0 14px;
+                margin-top: 18px;
+            }
+
+            .hero {
+                display: block;
+            }
+
+            .hero-tags {
+                justify-content: flex-start;
+                margin-top: 16px;
+                min-width: 0;
+            }
+
+            .panel {
+                margin-top: 16px;
+                padding: 18px;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .pagination {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">选</div>
+        <span>高校选课管理系统</span>
+    </div>
+    <div class="topbar-subtitle">学生选课基础处理工具</div>
+</header>
 <main>
-    <h1>高校选课管理系统</h1>
-    <p>支持 CSV 批量导入、去重、排序、分类展示和关键词检索。</p>
+    <section class="hero">
+        <div>
+            <h1>选课数据处理工作台</h1>
+            <p>支持 CSV 批量导入、自动去重、排序、课程分类展示和关键词检索。</p>
+        </div>
+        <div class="hero-tags">
+            <span class="tag">CSV 批量导入</span>
+            <span class="tag">自动去重排序</span>
+            <span class="tag">分类检索</span>
+        </div>
+    </section>
 
+    <div class="content-stack">
     <section class="panel">
-        <h2>数据批量导入</h2>
-        <p>每行一条数据，格式：学生ID,课程ID,课程名称,课程类型</p>
+        <div class="panel-header">
+            <div>
+                <h2>数据批量导入</h2>
+                <p class="panel-desc">每行一条数据，格式：学生ID,课程ID,课程名称,课程类型</p>
+            </div>
+        </div>
         <textarea id="csvInput">S000001,C000001,Java程序设计,专业课
 S000002,C000003,计算机网络,公共课
 S000003,C000002,大学英语,公共课</textarea>
-        <br>
-        <button onclick="importCsv()">导入文本框数据</button>
-        <div class="file-row">
+        <div class="action-row">
+            <button onclick="importCsv()">导入文本框数据</button>
             <input id="fileInput" type="file" accept=".csv,text/csv" hidden onchange="importSelectedFile()">
-            <button onclick="document.getElementById('fileInput').click()">选择 CSV 文件导入</button>
+            <button class="btn-secondary" onclick="document.getElementById('fileInput').click()">选择 CSV 文件导入</button>
         </div>
         <div id="dropZone" class="drop-zone">
             将 CSV 文件拖拽到这里导入
         </div>
     </section>
 
-    <section class="panel">
-        <h2>选课检索</h2>
-        <input id="keywordInput" placeholder="输入学生ID、课程ID、课程名称或课程类型">
-        <button onclick="searchRecords()">检索</button>
-        <button onclick="loadSamples()">显示样例数据</button>
+    <section class="panel record-panel">
+        <div class="panel-header">
+            <div>
+                <h2>数据展示</h2>
+                <p class="panel-desc">数据经后端去重、排序、分类处理后展示。</p>
+            </div>
+        </div>
+        <div class="search-row">
+            <input id="keywordInput" placeholder="输入学生ID、课程ID、课程名称或课程类型">
+            <button onclick="searchRecords()">检索</button>
+            <button class="btn-secondary" onclick="loadSamples()">样例数据</button>
+        </div>
         <div id="message" class="message"></div>
-    </section>
-
-    <section class="panel">
-        <h2>数据展示</h2>
+        <div id="tabContainer" class="tabs"></div>
         <div id="recordContainer"></div>
+        <div id="paginationContainer"></div>
     </section>
+    </div>
 </main>
 
 <script>
     const courseTypes = ["公共课", "专业课", "选修课"];
+    const pageSize = 10;
+    let currentGroupedRecords = {};
+    let activeCourseType = "公共课";
+    let currentPage = 1;
 
     async function loadSamples() {
         const response = await fetch("/api/enrollments/samples");
         const data = await response.json();
         showMessage("");
-        renderRecords(data);
+        setRecords(data);
     }
 
     async function importCsv() {
@@ -576,7 +896,7 @@ S000003,C000002,大学英语,公共课</textarea>
         });
         const data = await response.json();
         showMessage("");
-        renderRecords(data);
+        setRecords(data);
     }
 
     async function importSelectedFile() {
@@ -613,7 +933,7 @@ S000003,C000002,大学英语,公共课</textarea>
                 throw new Error(reason || "服务器处理失败");
             }
             const data = await response.json();
-            renderRecords(data);
+            setRecords(data);
             alert("CSV 文件导入成功");
         } catch (error) {
             alert(`CSV 文件导入失败：${error.message}`);
@@ -625,25 +945,80 @@ S000003,C000002,大学英语,公共课</textarea>
         const response = await fetch(`/api/enrollments/search?keyword=${keyword}`);
         const result = await response.json();
         showMessage(result.message || "");
-        renderRecords(result.data);
+        setRecords(result.data);
     }
 
-    function renderRecords(groupedRecords) {
+    function setRecords(groupedRecords) {
+        currentGroupedRecords = groupedRecords || {};
+        if (!courseTypes.includes(activeCourseType)) {
+            activeCourseType = "公共课";
+        }
+        currentPage = 1;
+        renderRecords();
+    }
+
+    function renderRecords() {
         const container = document.getElementById("recordContainer");
+        const paginationContainer = document.getElementById("paginationContainer");
         container.innerHTML = "";
+        paginationContainer.innerHTML = "";
+        renderTabs();
 
+        const allRecords = currentGroupedRecords[activeCourseType] || [];
+        if (allRecords.length === 0) {
+            container.innerHTML = `<div class="empty-state">暂无${activeCourseType}选课记录</div>`;
+            return;
+        }
+
+        const totalPages = Math.ceil(allRecords.length / pageSize);
+        currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const pageRecords = allRecords.slice(startIndex, startIndex + pageSize);
+        const title = document.createElement("h3");
+        title.className = "type-title";
+        title.innerHTML = `<span>${activeCourseType}</span><span class="count-badge">共 ${allRecords.length} 条</span>`;
+        container.appendChild(title);
+        container.appendChild(createTable(pageRecords));
+
+        if (totalPages > 1) {
+            renderPagination(allRecords.length, totalPages);
+        }
+    }
+
+    function renderTabs() {
+        const tabContainer = document.getElementById("tabContainer");
+        tabContainer.innerHTML = "";
         courseTypes.forEach(type => {
-            const records = groupedRecords[type] || [];
-            if (records.length === 0) {
-                return;
-            }
-
-            const title = document.createElement("h3");
-            title.className = "type-title";
-            title.textContent = type;
-            container.appendChild(title);
-            container.appendChild(createTable(records));
+            const records = currentGroupedRecords[type] || [];
+            const button = document.createElement("button");
+            button.className = `tab ${type === activeCourseType ? "active" : ""}`;
+            button.textContent = `${type}（${records.length}）`;
+            button.onclick = () => switchCourseType(type);
+            tabContainer.appendChild(button);
         });
+    }
+
+    function switchCourseType(type) {
+        activeCourseType = type;
+        currentPage = 1;
+        renderRecords();
+    }
+
+    function renderPagination(totalCount, totalPages) {
+        const paginationContainer = document.getElementById("paginationContainer");
+        paginationContainer.innerHTML = `
+            <div class="pagination">
+                <span>共 ${totalCount} 条，每页 ${pageSize} 条，第 ${currentPage} / ${totalPages} 页</span>
+                <button class="btn-secondary" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>上一页</button>
+                <button class="btn-secondary" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>下一页</button>
+            </div>
+        `;
+    }
+
+    function changePage(page) {
+        currentPage = page;
+        renderRecords();
     }
 
     function createTable(records) {
@@ -715,10 +1090,15 @@ S000003,C000002,大学英语,公共课</textarea>
 </script>
 </body>
 </html>
+
 ```
 
 ## 代码来源说明
 
 - AI 生成：SpringBoot 项目结构、Maven 配置、启动类、实体类、Service、Controller、前端页面、SQL 和分析设计文档。
-- 自己修改优化：CSV 文件按钮导入、拖拽导入、导入前确认弹窗、导入成功/失败弹窗、测试 CSV 文件、README 与文档补充。
-- 修改原因：适配选课管理场景，完善前后端衔接，优化页面交互，满足题目对 AI 提示词、完整代码、分析设计和批量导入测试的交付要求。
+- 自己修改优化：CSV 文件按钮导入、拖拽导入、导入前确认弹窗、导入成功/失败弹窗、信息管理系统风格 UI、检索区位置调整、分类 Tab 展示、每页 10 条分页、测试 CSV 文件、README 与文档补充。
+- 修改原因：适配选课管理场景，完善前后端衔接，优化页面交互，避免不同课程类型分页混杂，满足题目对 AI 提示词、完整代码、分析设计和批量导入测试的交付要求。
+
+
+
+
