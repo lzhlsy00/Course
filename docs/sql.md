@@ -1,0 +1,33 @@
+# SQL 编程题目
+
+## 题目 1：统计每门课程的选课人数
+
+返回课程ID、课程名称、选课人数（别名：`enroll_count`），结果按选课人数降序排序。
+
+```sql
+SELECT
+    c.course_id,
+    c.course_name,
+    COUNT(e.student_id) AS enroll_count
+FROM courses c
+LEFT JOIN enrollments e ON c.course_id = e.course_id
+GROUP BY c.course_id, c.course_name
+ORDER BY enroll_count DESC;
+```
+
+## 题目 2：统计选课人数超过50人的专业课
+
+返回课程ID、课程名称、选课人数，结果按选课人数升序排序。
+
+```sql
+SELECT
+    c.course_id,
+    c.course_name,
+    COUNT(e.student_id) AS enroll_count
+FROM courses c
+JOIN enrollments e ON c.course_id = e.course_id
+WHERE c.course_type = '专业课'
+GROUP BY c.course_id, c.course_name
+HAVING COUNT(e.student_id) > 50
+ORDER BY enroll_count ASC;
+```
