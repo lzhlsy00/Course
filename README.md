@@ -1,5 +1,16 @@
 # 高校选课管理系统 - 学生选课基础处理工具
 
+## 题目要求提交内容位置
+
+- Java 基础处理工具代码：`src/main/java/com/example/course/entity/EnrollRecord.java`、`src/main/java/com/example/course/service/EnrollRecordProcessor.java`
+- SQL 编程题答案：`docs/sql.md`
+- SpringBoot 后端完整代码：`src/main/java/com/example/course/`
+- 前端页面完整代码：`src/main/resources/static/index.html`
+- AI 编程工具名称、提示词、AI 完成任务说明：`docs/ai-prompt-and-code-notes.md`
+- AI 生成完整代码汇总：`docs/full-code.md`
+- 分析及设计文档：`docs/analysis-design.md`
+- CSV 测试文件：`test-data/enrollments-test.csv`
+
 本项目根据 `request.md` 完成以下内容：
 
 1. Java 基础处理工具：选课记录去重、排序、格式化输出。
@@ -37,6 +48,7 @@ src/main/resources
 docs
 ├─ sql.md
 ├─ ai-prompt-and-code-notes.md
+├─ full-code.md
 └─ analysis-design.md
 ```
 
@@ -56,4 +68,5 @@ http://localhost:8080/index.html
 
 - SQL 编程题：[docs/sql.md](docs/sql.md)
 - AI 编程工具说明：[docs/ai-prompt-and-code-notes.md](docs/ai-prompt-and-code-notes.md)
+- AI 生成完整代码汇总：[docs/full-code.md](docs/full-code.md)
 - 分析及设计：[docs/analysis-design.md](docs/analysis-design.md)
